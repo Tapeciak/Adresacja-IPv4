@@ -1,0 +1,243 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #eef2f5;
+    color: #2c3e50;
+    line-height: 1.6;
+    padding: 20px;
+    margin: 0;
+}
+
+.container {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+}
+
+/* Zakładki */
+.tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+.tab-btn {
+    background-color: #dde4ea;
+    color: #5c6b79;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.tab-btn:hover {
+    background-color: #cdd6de;
+}
+.tab-btn.active {
+    background-color: white;
+    color: #3498db;
+    box-shadow: 0 -3px 0 #3498db inset;
+}
+.tab-content.hidden {
+    display: none;
+}
+
+/* Karty i interfejs główny */
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 0 8px 8px 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.input-group {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.slash {
+    font-size: 24px;
+    color: #7f8c8d;
+}
+
+input[type="text"], input[type="number"] {
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 2px solid #e0e6ed;
+    border-radius: 6px;
+    outline: none;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus, input[type="number"]:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.2);
+}
+
+/* Przyciski */
+button {
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.1s, filter 0.3s;
+}
+button:active {
+    transform: translateY(2px);
+}
+.primary-btn { background-color: #3498db; color: white; }
+.primary-btn:hover { filter: brightness(1.1); }
+.generate-btn { background-color: #2ecc71; color: white; }
+.check-btn { background-color: #34495e; color: white; }
+.explain-btn { background-color: #f1c40f; color: #2c3e50; }
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #f1f4f6;
+    padding-bottom: 15px;
+}
+.task-header h2 { margin: 0; }
+
+/* Tabela z zadaniem */
+.table-container {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+    border: 1px solid #e0e6ed;
+}
+.task-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+.task-table td:first-child {
+    font-weight: 600;
+    width: 40%;
+    color: #34495e;
+}
+
+/* Kolory Walidacji (z miękkim przejściem) */
+input.correct {
+    background-color: #f0fdf4 !important;
+    border-color: #2ecc71 !important;
+    color: #1a6b37;
+}
+input.incorrect {
+    background-color: #fff1f2 !important;
+    border-color: #e74c3c !important;
+    color: #991b1b;
+}
+
+/* Tłumaczenia i widok binarny */
+.explanation-box {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-left: 5px solid #3498db;
+    margin-top: 20px;
+    border-radius: 0 6px 6px 0;
+}
+.binary-view {
+    font-family: 'Consolas', 'Courier New', monospace;
+    background-color: #1e293b;
+    color: #f8fafc;
+    padding: 15px;
+    border-radius: 6px;
+    white-space: pre-wrap;
+    font-size: 15px;
+    line-height: 1.5;
+}
+.highlight {
+    color: #fbbf24;
+    font-weight: bold;
+}
+/* Układ przycisków w nagłówku zadań */
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Przycisk automatycznego rozwiązywania */
+.solve-btn {
+    background-color: #9b59b6; /* Ładny fioletowy odcień */
+    color: white;
+}
+.solve-btn:hover {
+    filter: brightness(1.1);
+}
+/* --- STOPKA AUTORSKA --- */
+.app-footer {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #dee2e6;
+    color: #6c757d;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* --- WIDOK MOBILNY NA TELEFONY (RESPONSYWNOŚĆ) --- */
+@media (max-width: 768px) {
+    /* 1. Przebudowa zakładek w pionowy stos, żeby łatwo było w nie trafić palcem */
+    .tabs {
+        flex-direction: column;
+        gap: 5px;
+    }
+    .tab-btn {
+        border-radius: 8px;
+    }
+
+    /* 2. Przebudowa tabel 2-kolumnowych (Zad 1, 2 i 4) na pionowe */
+    .task-table tr {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+    }
+    .task-table td {
+        display: block;
+        width: 100% !important;
+        padding: 5px 0;
+    }
+    
+    /* 3. Ratowanie tabeli VLSM (Zad 3), aby przewijała się w poziomie */
+    /* Przywracamy jej normalny układ tabeli, ale pozwalamy na scrollowanie */
+    #task34-content thead tr,
+    #task34-content #t3-tbody tr {
+        display: table-row;
+    }
+    #task34-content #t3-tbody td,
+    #task34-content thead th {
+        display: table-cell;
+        padding: 8px;
+    }
+    
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; /* Płynne przewijanie na iOS */
+        padding: 10px 0;
+    }
+    
+    /* Blokujemy kurczenie się okienek w tabeli VLSM (minimalna szerokość) */
+    #t3-tbody input[type="text"] {
+        min-width: 140px;
+    }
+    
+    /* Zmniejszamy czcionkę w wynikach binarnych, by lepiej pasowała */
+    .binary-view {
+        font-size: 12px;
+    }
+}

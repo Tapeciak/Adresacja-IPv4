@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trener Adresacji IP</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Trener Adresacji IP 🌐</h1>
+        
+        <nav class="tabs">
+            <button class="tab-btn active" onclick="switchTab('calc', this)">Kalkulator (Tłumacz)</button>
+            <button class="tab-btn" onclick="switchTab('task1', this)">Zad 1: Podział FLSM</button>
+            <button class="tab-btn" onclick="switchTab('task2', this)">Zad 2: Identyfikacja</button>
+            <button class="tab-btn" onclick="switchTab('task34', this)">Zad 3 & 4: VLSM i Supersieci</button>
+        </nav>
+
+        <!-- ZAKŁADKA KALKULATORA -->
+        <section id="calc" class="tab-content active">
+            <div class="card">
+                <h2>Kalkulator z wyjaśnieniem</h2>
+                <p>Wpisz adres (możesz używać przecinków z klawiatury numerycznej) i maskę.</p>
+                <div class="input-group">
+                    <input type="text" id="ipInput" class="auto-format" placeholder="Np. 192.168.1.10" value="192.168.1.10">
+                    <span class="slash"> / </span>
+                    <input type="number" id="cidrInput" placeholder="27" min="1" max="32" value="27">
+                    <button class="primary-btn" onclick="calculate()">Oblicz i Wyjaśnij</button>
+                </div>
+                <div id="results" class="hidden"></div>
+            </div>
+        </section>
+
+        <!-- ZAKŁADKA ZADANIE 1 -->
+        <section id="task1" class="tab-content hidden">
+            <div class="card">
+            <div class="task-header">
+                    <h2>Zadanie 1: Klasyczny podział sieci</h2>
+                    <div class="header-buttons">
+                        <button class="generate-btn" onclick="generateTask1()">Generuj nowe zadanie</button>
+                        <button class="solve-btn" onclick="solveTask1()">Rozwiąż</button>
+                    </div>
+                </div>
+                
+                <div id="task1-content" class="hidden">
+                    <p id="task1-question" class="question-text"></p>
+                    
+                    <div class="table-container">
+                        <table class="task-table">
+                            <tr>
+                                <td>Maska (dziesiętnie):</td>
+                                <td><input type="text" id="t1-mask" class="auto-format" placeholder="np. 255.255.255.192"></td>
+                            </tr>
+                            <tr>
+                                <td>Adres podsieci:</td>
+                                <td><input type="text" id="t1-net" class="auto-format" placeholder="np. 192.168.1.64"></td>
+                            </tr>
+                            <tr>
+                                <td>Zakres adresów hostów:</td>
+                                <td><input type="text" id="t1-range" class="auto-format" placeholder="np. 192.168.1.65 - 192.168.1.126"></td>
+                            </tr>
+                            <tr>
+                                <td>Broadcast:</td>
+                                <td><input type="text" id="t1-bc" class="auto-format" placeholder="np. 192.168.1.127"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="check-btn" onclick="checkTask1()">Sprawdź odpowiedzi</button>
+                        <button id="btn-explain-t1" class="explain-btn hidden" onclick="explainTask1()">Wytłumacz błędy</button>
+                    </div>
+                    <div id="task1-explanation" class="explanation-box hidden"></div>
+                </div>
+            </div>
+        </section>
+<!-- ZAKŁADKA ZADANIE 2 -->
+        <section id="task2" class="tab-content hidden">
+            <div class="card">
+               <div class="task-header">
+                    <h2>Zadanie 2: Identyfikacja podsieci hosta</h2>
+                    <div class="header-buttons">
+                        <button class="generate-btn" onclick="generateTask2()">Generuj nowe zadanie</button>
+                        <button class="solve-btn" onclick="solveTask2()">Rozwiąż</button>
+                    </div>
+                </div>
+                <div id="task2-content" class="hidden">
+                    <p id="task2-question" class="question-text"></p>
+                    
+                    <div class="table-container">
+                        <table class="task-table">
+                            <tr>
+                                <td>Adres podsieci:</td>
+                                <td><input type="text" id="t2-net" class="auto-format" placeholder="np. 172.16.0.0"></td>
+                            </tr>
+                            <tr>
+                                <td>Zakres adresów hostów:</td>
+                                <td><input type="text" id="t2-range" class="auto-format" placeholder="np. 172.16.0.1 - 172.16.31.254"></td>
+                            </tr>
+                            <tr>
+                                <td>Broadcast:</td>
+                                <td><input type="text" id="t2-bc" class="auto-format" placeholder="np. 172.16.31.255"></td>
+                            </tr>
+                            <tr>
+                                <td>Adres prawidłowy (Tak/Nie):</td>
+                                <td><input type="text" id="t2-valid" placeholder="Wpisz Tak lub Nie"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="check-btn" onclick="checkTask2()">Sprawdź odpowiedzi</button>
+                        <button id="btn-explain-t2" class="explain-btn hidden" onclick="explainTask2()">Wytłumacz błędy</button>
+                    </div>
+                    <div id="task2-explanation" class="explanation-box hidden"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script src="script.js"></script>
+    <!-- ZAKŁADKA ZADANIE 3 i 4 -->
+        <section id="task34" class="tab-content hidden">
+            <div class="card">
+                <div class="task-header">
+                    <h2>Zad. 3 (VLSM) i Zad. 4 (Supersieci)</h2>
+                    <div class="header-buttons">
+                        <button class="generate-btn" onclick="generateTask34()">Generuj zadanie</button>
+                        <button class="solve-btn" onclick="solveTask34()">Rozwiąż</button>
+                    </div>
+                </div>
+                
+                <div id="task34-content" class="hidden">
+                    <p id="t3-question" class="question-text"></p>
+                    <p id="t3-requirements" style="font-weight: bold; margin-bottom: 20px;"></p>
+                    
+                    <h3>Tabela VLSM</h3>
+                    <div class="table-container" style="overflow-x: auto;">
+                        <table class="task-table" style="font-size: 14px;">
+                            <thead>
+                                <tr>
+                                    <th>Zapotrzebowanie</th>
+                                    <th>Adres podsieci</th>
+                                    <th>Adresy hostów</th>
+                                    <th>Broadcast</th>
+                                    <th>Maska</th>
+                                </tr>
+                            </thead>
+                            <tbody id="t3-tbody">
+                                <!-- Tutaj JS wygeneruje wiersze -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 style="margin-top: 30px;">Zadanie 4: Wyznacz adres supersieci dla zadania 3</h3>
+                    <div class="table-container">
+                        <table class="task-table">
+                            <tr>
+                                <td>Maska (dziesiętnie lub CIDR):</td>
+                                <td><input type="text" id="t4-mask" class="auto-format"></td>
+                            </tr>
+                            <tr>
+                                <td>Adres supersieci:</td>
+                                <td><input type="text" id="t4-net" class="auto-format"></td>
+                            </tr>
+                            <tr>
+                                <td>Broadcast:</td>
+                                <td><input type="text" id="t4-bc" class="auto-format"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="check-btn" onclick="checkTask34()">Sprawdź całe zadanie</button>
+                        <button id="btn-explain-t34" class="explain-btn hidden" onclick="explainTask34()">Wytłumacz</button>
+                    </div>
+                    <div id="task34-explanation" class="explanation-box hidden"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stopka autorska -->
+        <footer class="app-footer">
+            Designed by Mikołaj Łyżwa
+        </footer>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
